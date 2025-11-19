@@ -38,3 +38,19 @@ html {
     --sidebar-ring: var(--ring);
   }
 }
+
+/* 3D 效果支持 */
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+}

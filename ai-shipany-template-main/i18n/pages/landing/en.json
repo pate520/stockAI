@@ -408,70 +408,6 @@
       "url": "/"
     },
     "copyright": "© 2025 • Stock AI Quant Lab. All rights reserved.",
-    "nav": {
-      "items": [
-        {
-          "title": "Product",
-          "children": [
-            {
-              "title": "Features",
-              "url": "/#feature",
-              "target": "_self"
-            },
-            {
-              "title": "FAQ",
-              "url": "/#faq",
-              "target": "_self"
-            },
-            {
-              "title": "Dashboard",
-              "url": "/dashboard",
-              "target": "_self"
-            }
-          ]
-        },
-        {
-          "title": "Resources",
-          "children": [
-            {
-              "title": "Documentation",
-              "url": "/docs",
-              "target": "_self"
-            },
-            {
-              "title": "Blog",
-              "url": "/blog",
-              "target": "_self"
-            },
-            {
-              "title": "Support",
-              "url": "/support",
-              "target": "_self"
-            }
-          ]
-        },
-        {
-          "title": "Legal",
-          "children": [
-            {
-              "title": "Privacy Policy",
-              "url": "/privacy-policy",
-              "target": "_self"
-            },
-            {
-              "title": "Terms of Service",
-              "url": "/terms-of-service",
-              "target": "_self"
-            },
-            {
-              "title": "Disclaimer",
-              "url": "/disclaimer",
-              "target": "_self"
-            }
-          ]
-        }
-      ]
-    },
     "social": {
       "items": [
         {
@@ -497,18 +433,6 @@
           "icon": "RiMailLine",
           "url": "mailto:support@stockaiquantlab.com",
           "target": "_self"
-        }
-      ]
-    },
-    "agreement": {
-      "items": [
-        {
-          "title": "Privacy Policy",
-          "url": "/privacy-policy"
-        },
-        {
-          "title": "Terms of Service",
-          "url": "/terms-of-service"
         }
       ]
     }

@@ -4,6 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import HeroBg from "@/components/blocks/hero/bg";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
+import SmartSuggestions from "@/components/guide/SmartSuggestions";
 
 interface StrategyInputHeroProps {
     onGenerate: (input: string) => void;
@@ -13,6 +14,10 @@ interface StrategyInputHeroProps {
 export default function StrategyInputHero({ onGenerate, isGenerating }: StrategyInputHeroProps) {
     const [input, setInput] = useState("");
     const t = useTranslations("strategy_input");
+
+    const handleSelectSuggestion = (text: string) => {
+        setInput(text);
+    };
 
     return (
         <section className="relative py-24 overflow-hidden">
@@ -32,7 +37,7 @@ export default function StrategyInputHero({ onGenerate, isGenerating }: Strategy
                         {t("description")}
                     </p>
 
-                    <div className="bg-card/50 backdrop-blur-md border rounded-2xl p-2 shadow-2xl">
+                    <div className="bg-card/50 backdrop-blur-md border rounded-2xl p-2 shadow-2xl" data-tour="strategy-input">
                         <div className="relative">
                             <Textarea
                                 placeholder={t("placeholder")}
@@ -40,7 +45,7 @@ export default function StrategyInputHero({ onGenerate, isGenerating }: Strategy
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                             />
-                            <div className="absolute bottom-2 right-2">
+                            <div className="absolute bottom-2 right-2" data-tour="generate-button">
                                 <Button
                                     size="lg"
                                     onClick={() => onGenerate(input)}
@@ -61,6 +66,11 @@ export default function StrategyInputHero({ onGenerate, isGenerating }: Strategy
                                 </Button>
                             </div>
                         </div>
+                    </div>
+
+                    {/* 智能建议 */}
+                    <div className="mt-12" data-tour="strategy-templates">
+                        <SmartSuggestions onSelectSuggestion={handleSelectSuggestion} />
                     </div>
 
                     <div className="mt-8 flex items-center justify-center gap-8 text-sm text-muted-foreground">

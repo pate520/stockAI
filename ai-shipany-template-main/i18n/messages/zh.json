@@ -200,8 +200,8 @@
   },
   "strategy_input": {
     "active_badge": "AI 交易引擎已激活",
-    "title_prefix": "描述您的",
-    "title_highlight": "致胜策略",
+    "title_prefix": "先练再上场",
+    "title_highlight": "用 AI 做量化回测",
     "description": "我们的高级 AI 将分析您的描述，根据历史数据进行回测，并精准执行交易。",
     "placeholder": "例如：当 BTC 放量突破 20 日均线时买入，下跌 5% 时卖出...",
     "generate_btn": "生成策略",
@@ -232,6 +232,195 @@
     "trade_executed": "交易已执行",
     "pnl_label": "盈亏",
     "roi_label": "收益率",
-    "retroactive_note": "*交易基于开始时确认的信号回溯执行。"
+    "retroactive_note": "*交易基于开始时确认的信号回溯执行。",
+    "current_pnl": "当前盈亏",
+    "risk_level_label": "风险等级",
+    "risk_badge": "{level} 风险",
+    "status_ready_title": "AI 策略已就绪",
+    "status_ready_description": "AI 已分析市场并准备好 {strategy} 执行方案。",
+    "status_ready_hint": "点击 {action} 激活自动交易代理。",
+    "live_badge": "实时行情",
+    "insights_title": "AI 洞察",
+    "insights": {
+      "init": "AI 代理已启动，正在扫描市场结构...",
+      "types": {
+        "analysis": "分析",
+        "signal": "信号",
+        "risk": "风险",
+        "execution": "执行"
+      },
+      "messages": {
+        "volatility": "检测到波动率收缩。",
+        "rsi": "5 分钟级别 RSI 出现背离。",
+        "stoploss": "已动态调整止损位。",
+        "orderflow": "订单流出现多头优势。",
+        "resistance": "关键阻力位被测试。"
+      }
+    },
+    "tooltip_price": "价格",
+    "position_long": "做多",
+    "position_short": "做空"
+  },
+  "trading_simulation": {
+    "risk": {
+      "low": "低",
+      "medium": "中",
+      "high": "高"
+    },
+    "strategies": {
+      "trend_following": {
+        "name": "AI 趋势跟随 V3",
+        "description": "借助 LSTM 模型捕捉短周期价格动量。",
+        "expected_return": "年化 15%-25%"
+      },
+      "mean_reversion": {
+        "name": "均值回归 Alpha",
+        "description": "利用 RSI 背离识别超买/超卖机会。",
+        "expected_return": "年化 30%-50%"
+      },
+      "arbitrage": {
+        "name": "统计套利机器人",
+        "description": "跨多个周期捕捉价格错位。",
+        "expected_return": "年化 5%-10%"
+      }
+    }
+  },
+  "strategy_ready": {
+    "title": "AI 策略已生成",
+    "subtitle": "选择一个策略开始交易",
+    "start_trading": "启动 AI 交易代理",
+    "backtest_title": "历史回测",
+    "technical_title": "技术指标",
+    "ai_decision_title": "AI 决策树",
+    "ai_analysis_title": "AI 分析报告",
+    "tip": "提示：您可以左右滑动切换策略，或点击箭头按钮导航"
+  },
+  "backtest_chart": {
+    "title": "回测收益曲线",
+    "period_30d": "30天",
+    "period_90d": "90天",
+    "period_180d": "180天",
+    "win_rate": "胜率",
+    "sharpe_ratio": "夏普比率",
+    "max_drawdown": "最大回撤",
+    "total_trades": "总交易次数"
+  },
+  "technical_indicators": {
+    "title": "技术指标",
+    "rsi": "RSI 指标",
+    "rsi_overbought": "超买",
+    "rsi_oversold": "超卖",
+    "rsi_neutral": "中性",
+    "rsi_tooltip": "相对强弱指标 (RSI) 衡量价格变动的速度和幅度",
+    "macd": "MACD 指标",
+    "macd_line": "MACD 线",
+    "macd_signal": "信号线",
+    "macd_histogram": "柱状图",
+    "macd_bullish": "看涨",
+    "macd_bearish": "看跌",
+    "macd_neutral": "中性",
+    "macd_tooltip": "移动平均收敛散度 (MACD) 显示趋势方向和动量",
+    "bollinger": "布林带",
+    "bollinger_upper": "上轨",
+    "bollinger_middle": "中轨",
+    "bollinger_lower": "下轨",
+    "bollinger_above": "价格在上轨上方",
+    "bollinger_below": "价格在下轨下方",
+    "bollinger_inside": "价格在通道内",
+    "bollinger_tooltip": "布林带显示价格波动范围和潜在的超买超卖区域",
+    "current_price": "当前价格"
+  },
+  "ai_decision_tree": {
+    "title": "AI 决策流程",
+    "node_analysis": "分析",
+    "node_decision": "决策",
+    "node_action": "行动",
+    "status_completed": "已完成",
+    "status_in_progress": "进行中",
+    "status_pending": "待处理"
+  },
+  "strategy_comparison": {
+    "title": "策略对比",
+    "expected_return": "预期收益",
+    "ai_confidence": "AI 置信度",
+    "win_rate": "历史胜率",
+    "risk_level": "风险等级",
+    "select_strategy": "选择此策略"
+  },
+  "smart_suggestions": {
+    "title": "智能建议",
+    "subtitle": "点击使用",
+    "hint": "💡 提示：您也可以自由描述您的交易想法，AI 会理解并生成相应策略",
+    "templates": {
+      "breakout": {
+        "title": "突破交易",
+        "description": "当价格突破关键阻力位时买入",
+        "text": "当 BTC 突破 20 日均线且成交量放大 50% 时买入，跌破 10 日均线时卖出"
+      },
+      "mean_reversion": {
+        "title": "均值回归",
+        "description": "利用价格偏离均值时的回归特性",
+        "text": "当 RSI 低于 30 且价格低于布林带下轨时买入，RSI 高于 70 时卖出"
+      },
+      "trend_following": {
+        "title": "趋势跟随",
+        "description": "跟随市场主要趋势方向",
+        "text": "当 5 日均线上穿 20 日均线时买入，下穿时卖出，止损设置为 3%"
+      },
+      "volatility": {
+        "title": "波动率策略",
+        "description": "利用市场波动率变化",
+        "text": "当 ATR 指标上升 20% 且价格突破布林带上轨时买入，波动率回落时卖出"
+      },
+      "momentum": {
+        "title": "动量策略",
+        "description": "捕捉强劲的价格动量",
+        "text": "当 MACD 金叉且 RSI 大于 50 时买入，MACD 死叉时卖出"
+      },
+      "conservative": {
+        "title": "稳健策略",
+        "description": "低风险、稳定收益",
+        "text": "当价格在 50 日均线上方且 RSI 在 40-60 区间时买入，跌破 50 日均线时卖出"
+      }
+    }
+  },
+  "ai_analysis_steps": {
+    "title": "AI 正在分析您的策略...",
+    "step1": {
+      "title": "数据分析",
+      "description": "正在分析历史价格数据和市场结构...",
+      "data_points": "已处理 10,000+ 数据点"
+    },
+    "step2": {
+      "title": "信号识别",
+      "description": "识别买卖信号和关键价格水平...",
+      "data_points": "已识别 50+ 交易信号"
+    },
+    "step3": {
+      "title": "风险评估",
+      "description": "评估策略风险和回报比...",
+      "data_points": "已计算 20+ 风险指标"
+    },
+    "step4": {
+      "title": "策略生成",
+      "description": "生成优化的交易策略...",
+      "data_points": "已生成 3 个策略方案"
+    }
+  },
+  "streaming_insight": {
+    "title": "AI 实时洞察",
+    "no_insights": "等待 AI 分析...",
+    "types": {
+      "bullish": "看涨",
+      "bearish": "看跌",
+      "warning": "警告",
+      "info": "信息"
+    }
+  },
+  "onboarding_tour": {
+    "skip": "跳过",
+    "back": "上一步",
+    "next": "下一步",
+    "finish": "完成"
   }
 }

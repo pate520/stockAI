@@ -15,11 +15,11 @@ export default async function DefaultLayout({
   const page = await getLandingPage(locale);
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       {page.header && <Header header={page.header} />}
-      <main className="overflow-x-hidden">{children}</main>
+      <main className="flex-grow overflow-x-hidden">{children}</main>
       {page.footer && <Footer footer={page.footer} />}
       {/* <Feedback socialLinks={page.footer?.social?.items} /> */}
-    </>
+    </div>
   );
 }

@@ -6,7 +6,9 @@ import { Strategy, Position, TradingStatus } from "@/hooks/useTradingSimulation"
 import { Activity, ArrowUpRight, ShieldCheck, Zap, CheckCircle2, TrendingUp, Brain, Target, BarChart2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { AreaChart, Area, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import StreamingInsight from "@/components/ai/StreamingInsight";
+import CandlestickChart from "@/components/charts/CandlestickChart";
 
 interface TradingDashboardProps {
     status: TradingStatus;
@@ -49,14 +51,34 @@ export default function TradingDashboard({
     const [chartData, setChartData] = useState<{ time: number; price: number }[]>([]);
     const [insights, setInsights] = useState<Insight[]>([]);
     const scrollRef = useRef<HTMLDivElement>(null);
+    const insightTypeLabels: Record<Insight['type'], string> = {
+        analysis: t("insights.types.analysis"),
+        risk: t("insights.types.risk"),
+        signal: t("insights.types.signal"),
+        execution: t("insights.types.execution"),
+    };
+    const randomInsightPool = useMemo<Array<{ type: Insight['type']; message: string }>>(
+        () => [
+            { type: 'analysis', message: t("insights.messages.volatility") },
+            { type: 'signal', message: t("insights.messages.rsi") },
+            { type: 'risk', message: t("insights.messages.stoploss") },
+            { type: 'analysis', message: t("insights.messages.orderflow") },
+            { type: 'signal', message: t("insights.messages.resistance") },
+        ],
+        [t]
+    );
+    const getRandomInsight = useCallback(
+        () => randomInsightPool[Math.floor(Math.random() * randomInsightPool.length)],
+        [randomInsightPool]
+    );
 
     // Initialize
     useEffect(() => {
         if (status === 'trading' && startPrice && chartData.length === 0) {
             setChartData(generateInitialData(startPrice));
-            addInsight('analysis', "AI Agent initialized. Scanning market structure...");
+            addInsight('analysis', t("insights.init"));
         }
-    }, [status, startPrice, strategy, chartData.length]);
+    }, [status, startPrice, strategy, chartData.length, t]);
 
     // Live Updates
     useEffect(() => {
@@ -73,7 +95,7 @@ export default function TradingDashboard({
                 addInsight(newInsight.type, newInsight.message);
             }
         }
-    }, [currentPrice, status]);
+    }, [currentPrice, status, getRandomInsight]);
 
     // Auto-scroll insights
     useEffect(() => {
@@ -84,17 +106,6 @@ export default function TradingDashboard({
 
     const addInsight = (type: Insight['type'], message: string) => {
         setInsights(prev => [...prev, { id: Math.random().toString(), type, message, timestamp: Date.now() }]);
-    };
-
-    const getRandomInsight = () => {
-        const options: { type: Insight['type'], message: string }[] = [
-            { type: 'analysis', message: "Volatility contraction detected." },
-            { type: 'signal', message: "RSI divergence on 5m timeframe." },
-            { type: 'risk', message: "Dynamic stop-loss adjusted." },
-            { type: 'analysis', message: "Order flow imbalance favoring bulls." },
-            { type: 'signal', message: "Key resistance level tested." },
-        ];
-        return options[Math.floor(Math.random() * options.length)];
     };
 
     if (!strategy) return null;
@@ -117,7 +128,9 @@ export default function TradingDashboard({
                     <div>
                         <h2 className="text-2xl font-bold tracking-tight">{strategy.name}</h2>
                         <div className="flex items-center gap-3 text-muted-foreground text-sm mt-1">
-                            <Badge variant="outline" className="font-mono text-xs">{strategy.risk} Risk</Badge>
+                            <Badge variant="outline" className="font-mono text-xs">
+                                {t("risk_badge", { level: strategy.riskLabel })}
+                            </Badge>
                             <span>•</span>
                             <span>{strategy.description}</span>
                         </div>
@@ -134,7 +147,7 @@ export default function TradingDashboard({
                 {(status === 'trading' || status === 'completed') && (
                     <div className="flex items-center gap-6">
                         <div className="text-right">
-                            <div className="text-sm text-muted-foreground">Current P&L</div>
+                            <div className="text-sm text-muted-foreground">{t("current_pnl")}</div>
                             <div className={`text-2xl font-mono font-bold ${isProfitable ? 'text-green-500' : 'text-red-500'}`}>
                                 {isProfitable ? '+' : ''}{profitPercent.toFixed(2)}%
                             </div>
@@ -164,17 +177,18 @@ export default function TradingDashboard({
                                 <div className="mx-auto size-20 rounded-full bg-primary/5 flex items-center justify-center mb-6">
                                     <Brain className="size-10 text-primary/60" />
                                 </div>
-                                <h3 className="text-xl font-semibold">AI Strategy Ready</h3>
+                                <h3 className="text-xl font-semibold">{t("status_ready_title")}</h3>
                                 <p className="text-muted-foreground">
-                                    The AI has analyzed market conditions and prepared the <strong>{strategy.name}</strong> execution plan.
-                                    Click "Start Trading" to activate the autonomous agent.
+                                    {t("status_ready_description", { strategy: strategy.name })}
+                                    <br />
+                                    {t("status_ready_hint", { action: t("start_trading_btn") })}
                                 </p>
                             </div>
                         </Card>
                         <div className="space-y-6">
                             <MetricCard label={t("expected_return")} value={strategy.expectedReturn} icon={<TrendingUp className="text-green-500" />} />
-                            <MetricCard label="AI Confidence" value="94.2%" icon={<Target className="text-blue-500" />} />
-                            <MetricCard label="Risk Level" value={strategy.risk} icon={<ShieldCheck className="text-orange-500" />} />
+                            <MetricCard label={t("ai_confidence")} value="94.2%" icon={<Target className="text-blue-500" />} />
+                            <MetricCard label={t("risk_level_label")} value={strategy.riskLabel} icon={<ShieldCheck className="text-orange-500" />} />
                         </div>
                     </motion.div>
                 ) : (
@@ -189,7 +203,7 @@ export default function TradingDashboard({
                         <Card className="lg:col-span-3 border-border/50 bg-card/50 backdrop-blur-sm overflow-hidden flex flex-col relative">
                             <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
                                 <Badge variant="secondary" className="animate-pulse bg-green-500/10 text-green-500 border-green-500/20">
-                                    <Activity className="mr-1 size-3" /> LIVE MARKET
+                                    <Activity className="mr-1 size-3" /> {t("live_badge")}
                                 </Badge>
                             </div>
                             <div className="flex-1 w-full min-h-[400px] p-4 pt-12">
@@ -213,7 +227,7 @@ export default function TradingDashboard({
                                         <Tooltip
                                             contentStyle={{ backgroundColor: 'hsl(var(--popover))', borderColor: 'hsl(var(--border))', borderRadius: '8px' }}
                                             itemStyle={{ color: 'hsl(var(--popover-foreground))' }}
-                                            formatter={(val: number) => [val.toFixed(2), 'Price']}
+                                            formatter={(val: number) => [val.toFixed(2), t("tooltip_price")]}
                                             labelFormatter={() => ''}
                                         />
                                         <ReferenceLine y={startPrice || 0} stroke="hsl(var(--muted-foreground))" strokeDasharray="3 3" />
@@ -233,50 +247,8 @@ export default function TradingDashboard({
 
                         {/* Right: Insight Stream (1 col) */}
                         <div className="flex flex-col gap-6 h-full">
-                            <Card className="flex-1 border-border/50 bg-card/50 backdrop-blur-sm flex flex-col overflow-hidden">
-                                <div className="p-4 border-b border-border/50 bg-muted/20">
-                                    <h3 className="font-semibold flex items-center gap-2 text-sm">
-                                        <Brain className="size-4 text-primary" />
-                                        AI Insights
-                                    </h3>
-                                </div>
-                                <div
-                                    ref={scrollRef}
-                                    className="flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar max-h-[400px] lg:max-h-none"
-                                >
-                                    <AnimatePresence initial={false}>
-                                        {insights.map((insight) => (
-                                            <motion.div
-                                                key={insight.id}
-                                                initial={{ opacity: 0, x: 20 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                className="p-3 rounded-lg bg-background/80 border border-border/50 text-sm shadow-sm"
-                                            >
-                                                <div className="flex items-center gap-2 mb-1">
-                                                    {insight.type === 'risk' && <ShieldCheck className="size-3 text-orange-500" />}
-                                                    {insight.type === 'signal' && <Activity className="size-3 text-blue-500" />}
-                                                    {insight.type === 'analysis' && <BarChart2 className="size-3 text-purple-500" />}
-                                                    <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold opacity-70">
-                                                        {insight.type}
-                                                    </span>
-                                                    <span className="text-[10px] text-muted-foreground ml-auto">
-                                                        {new Date(insight.timestamp).toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                                                    </span>
-                                                </div>
-                                                <p className="text-foreground/90 leading-tight">{insight.message}</p>
-                                            </motion.div>
-                                        ))}
-                                    </AnimatePresence>
-                                    {status === 'trading' && (
-                                        <div className="flex justify-center py-4">
-                                            <div className="flex gap-1">
-                                                <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0 }} className="size-1.5 rounded-full bg-primary/40" />
-                                                <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} className="size-1.5 rounded-full bg-primary/40" />
-                                                <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} className="size-1.5 rounded-full bg-primary/40" />
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
+                            <Card className="flex-1 border-border/50 bg-card/50 backdrop-blur-sm p-4 overflow-hidden">
+                                <StreamingInsight isActive={status === 'trading'} interval={4000} />
                             </Card>
 
                             {/* Result Card (Appears at bottom right) */}
@@ -292,9 +264,11 @@ export default function TradingDashboard({
                                                 <div className="flex items-center justify-between mb-3">
                                                     <div className="flex items-center gap-2 text-green-600 font-bold">
                                                         <CheckCircle2 className="size-5" />
-                                                        Trade Executed
+                                                        {t("trade_executed")}
                                                     </div>
-                                                    <Badge className="bg-green-600">{position.type}</Badge>
+                                                    <Badge className="bg-green-600">
+                                                        {position.type === 'LONG' ? t("position_long") : t("position_short")}
+                                                    </Badge>
                                                 </div>
                                                 <div className="flex items-baseline gap-1">
                                                     <span className="text-3xl font-bold text-green-600">

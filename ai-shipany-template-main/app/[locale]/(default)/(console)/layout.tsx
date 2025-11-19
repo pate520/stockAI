@@ -6,10 +6,11 @@ import { getUserInfo } from "@/services/user";
 import { redirect } from "next/navigation";
 
 export default async function ({ children }: { children: ReactNode }) {
-  const userInfo = await getUserInfo();
-  if (!userInfo || !userInfo.email) {
-    redirect("/auth/signin");
-  }
+  // TODO: 临时注释掉登录检查，方便开发预览
+  // const userInfo = await getUserInfo();
+  // if (!userInfo || !userInfo.email) {
+  //   redirect("/auth/signin");
+  // }
 
   const t = await getTranslations();
 

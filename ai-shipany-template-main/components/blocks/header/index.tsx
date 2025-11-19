@@ -40,9 +40,10 @@ export default function Header({ header }: { header: HeaderType }) {
 
   return (
     <section className="py-3">
-      <div className="md:max-w-7xl mx-auto px-4">
-        <nav className="hidden justify-between lg:flex">
-          <div className="flex items-center gap-6">
+      <div className="container mx-auto max-w-7xl px-4">
+        <nav className="hidden lg:grid lg:grid-cols-[auto_1fr_auto] lg:items-center lg:gap-8">
+          {/* Left: Logo and Brand */}
+          <div className="flex items-center gap-2">
             <a
               href={header.brand?.url || ""}
               className="flex items-center gap-2"
@@ -60,10 +61,13 @@ export default function Header({ header }: { header: HeaderType }) {
                 </span>
               )}
             </a>
-            <div className="flex items-center">
-              <NavigationMenu>
-                <NavigationMenuList>
-                  {header.nav?.items?.map((item, i) => {
+          </div>
+
+          {/* Center: Navigation */}
+          <div className="flex items-center justify-center">
+            <NavigationMenu>
+              <NavigationMenuList>
+                {header.nav?.items?.map((item, i) => {
                     if (item.children && item.children.length > 0) {
                       return (
                         <NavigationMenuItem
@@ -138,12 +142,13 @@ export default function Header({ header }: { header: HeaderType }) {
                         </a>
                       </NavigationMenuItem>
                     );
-                  })}
-                </NavigationMenuList>
-              </NavigationMenu>
-            </div>
+                })}
+              </NavigationMenuList>
+            </NavigationMenu>
           </div>
-          <div className="shrink-0 flex gap-2 items-center">
+
+          {/* Right: Language, Theme, Sign In */}
+          <div className="flex gap-2 items-center justify-end min-w-[200px]">
             {header.show_locale && <LocaleToggle />}
             {header.show_theme && <ThemeToggle />}
 

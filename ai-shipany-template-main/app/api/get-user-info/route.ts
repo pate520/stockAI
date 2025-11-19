@@ -2,7 +2,6 @@ import { respData, respErr, respJson } from "@/lib/resp";
 
 import { findUserByUuid } from "@/models/user";
 import { getUserUuid } from "@/services/user";
-import { getUserCredits } from "@/services/credit";
 
 export async function POST(req: Request) {
   try {
@@ -15,8 +14,6 @@ export async function POST(req: Request) {
     if (!user) {
       return respErr("user not exist");
     }
-
-    user.credits = await getUserCredits(user_uuid);
 
     return respData(user);
   } catch (e) {

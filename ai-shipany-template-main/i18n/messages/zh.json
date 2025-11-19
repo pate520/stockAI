@@ -197,5 +197,41 @@
       "hours_ago": "小时前",
       "days_ago": "天前"
     }
+  },
+  "strategy_input": {
+    "active_badge": "AI 交易引擎已激活",
+    "title_prefix": "描述您的",
+    "title_highlight": "致胜策略",
+    "description": "我们的高级 AI 将分析您的描述，根据历史数据进行回测，并精准执行交易。",
+    "placeholder": "例如：当 BTC 放量突破 20 日均线时买入，下跌 5% 时卖出...",
+    "generate_btn": "生成策略",
+    "analyzing_btn": "分析中...",
+    "feature_nlp": "自然语言处理",
+    "feature_analysis": "实时市场分析",
+    "feature_risk": "风险管理自动驾驶"
+  },
+  "trading_dashboard": {
+    "expected_return": "预期收益",
+    "ai_confidence": "AI 置信度",
+    "market_sentiment": "市场情绪",
+    "start_trading_btn": "启动 AI 交易代理",
+    "live_monitor_title": "实时市场监控",
+    "price_label": "BTC/USDT 价格",
+    "chart_placeholder": "实时图表可视化",
+    "entry_price_label": "入场价格 (模拟)",
+    "time_elapsed_label": "已用时间",
+    "monitoring_status": "监控中...",
+    "debug_btn": "[调试] 快进 (10分钟)",
+    "execution_log_title": "AI 执行日志",
+    "log_initialized": "策略已初始化",
+    "log_initialized_desc": "已加载 {name} 参数。",
+    "log_scan": "市场扫描完成",
+    "log_scan_desc": "已识别流动性区域和波动模式。",
+    "log_waiting": "等待最佳入场点...",
+    "log_waiting_desc": "正在监控价格行为以确认信号。",
+    "trade_executed": "交易已执行",
+    "pnl_label": "盈亏",
+    "roi_label": "收益率",
+    "retroactive_note": "*交易基于开始时确认的信号回溯执行。"
   }
 }

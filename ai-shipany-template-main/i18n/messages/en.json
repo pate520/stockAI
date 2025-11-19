@@ -197,5 +197,41 @@
       "hours_ago": "hours ago",
       "days_ago": "days ago"
     }
+  },
+  "strategy_input": {
+    "active_badge": "AI Trading Engine Active",
+    "title_prefix": "Describe Your",
+    "title_highlight": "Winning Strategy",
+    "description": "Our advanced AI will analyze your description, backtest against historical data, and execute trades with precision timing.",
+    "placeholder": "E.g., Buy when BTC breaks above the 20-day moving average with high volume, and sell if it drops 5%...",
+    "generate_btn": "Generate Strategy",
+    "analyzing_btn": "Analyzing...",
+    "feature_nlp": "Natural Language Processing",
+    "feature_analysis": "Real-time Market Analysis",
+    "feature_risk": "Risk Management Auto-pilot"
+  },
+  "trading_dashboard": {
+    "expected_return": "Expected Return",
+    "ai_confidence": "AI Confidence",
+    "market_sentiment": "Market Sentiment",
+    "start_trading_btn": "Start AI Trading Agent",
+    "live_monitor_title": "Live Market Monitor",
+    "price_label": "BTC/USDT Price",
+    "chart_placeholder": "Real-time Chart Visualization",
+    "entry_price_label": "Entry Price (Simulated)",
+    "time_elapsed_label": "Time Elapsed",
+    "monitoring_status": "Monitoring...",
+    "debug_btn": "[Debug] Fast Forward (10m)",
+    "execution_log_title": "AI Execution Log",
+    "log_initialized": "Strategy Initialized",
+    "log_initialized_desc": "Loaded {name} parameters.",
+    "log_scan": "Market Scan Complete",
+    "log_scan_desc": "Identified liquidity zones and volatility patterns.",
+    "log_waiting": "Waiting for Optimal Entry...",
+    "log_waiting_desc": "Monitoring price action for signal confirmation.",
+    "trade_executed": "Trade Executed",
+    "pnl_label": "Profit/Loss",
+    "roi_label": "ROI",
+    "retroactive_note": "*Trade executed retroactively based on confirmed signal at start time."
   }
 }
